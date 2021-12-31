@@ -28,7 +28,7 @@ env = DefaultEnvironment()
 platform = env.PioPlatform()
 board = env.BoardConfig()
 
-FRAMEWORK_DIR = platform.get_package_dir("framework-arduinonordicnrf5")
+FRAMEWORK_DIR = platform.get_package_dir("framework-n-able")
 assert isdir(FRAMEWORK_DIR)
 
 env.Append(
@@ -61,7 +61,7 @@ env.Append(
         "NRF5",
         ("DEVICE_RAM_SIZE", "16"),
         ("__HEAP_SIZE", "0"),
-        ("__STACK_SIZE", "368"),
+        ("__STACK_SIZE", "400"),
         "%s" % board.get("build.mcu", "")[0:5].upper()
     ],
 
