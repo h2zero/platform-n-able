@@ -19,7 +19,7 @@ from platformio.managers.platform import PlatformBase
 from platformio.util import get_systype
 
 
-class Nordicnrf51Platform(PlatformBase):
+class NablePlatform(PlatformBase):
 
     def is_embedded(self):
         return True

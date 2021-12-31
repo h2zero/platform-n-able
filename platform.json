@@ -1,36 +1,28 @@
 {
-  "name": "nordicnrf51",
-  "title": "Nordic nRF51",
-  "description": "The Nordic nRF51 Series is a family of highly flexible, multi-protocol, system-on-chip (SoC) devices for ultra-low power wireless applications. nRF51 Series devices support a range of protocol stacks including Bluetooth Smart (previously called Bluetooth low energy), ANT and proprietary 2.4GHz protocols such as Gazell.",
-  "homepage": "https://www.nordicsemi.com/eng/Products/nRF51-Series-SoC",
+  "name": "n-able",
+  "title": "n-able",
+  "description": "Development platform for Arm BLE devices supported by the NimBLE stack",
+  "homepage": "https://github.com/h2zero/platform-n-able",
   "license": "Apache-2.0",
   "keywords": [
     "dev-platform",
     "ARM",
     "Cortex-M",
-    "Nordic Semiconductor",
-    "nRF51"
+    "NimBLE",
+    "nRF5"
   ],
   "engines": {
     "platformio": "^5"
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/platformio/platform-nordicnrf51.git"
+    "url": "https://github.com/h2zero/platform-n-able.git"
   },
-  "version": "8.0.0",
+  "version": "0.1.0",
   "frameworks": {
     "arduino": {
-      "package": "framework-arduinonordicnrf5",
+      "package": "framework-n-able",
       "script": "builder/frameworks/arduino/nrf5.py"
-    },
-    "mbed": {
-      "package": "framework-mbed",
-      "script": "builder/frameworks/mbed.py"
-    },
-    "zephyr": {
-      "package": "framework-zephyr",
-      "script": "builder/frameworks/zephyr.py"
     }
   },
   "packages": {
@@ -42,23 +34,10 @@
         "~1.80201.0"
       ]
     },
-    "framework-arduinonordicnrf5": {
+    "framework-n-able": {
       "type": "framework",
       "optional": true,
-      "owner": "platformio",
-      "version": "~1.700.0"
-    },
-    "framework-mbed": {
-      "type": "framework",
-      "optional": true,
-      "owner": "platformio",
-      "version": "~5.51105.190304"
-    },
-    "framework-zephyr": {
-      "type": "framework",
-      "optional": true,
-      "owner": "platformio",
-      "version": "~2.20700.0"
+      "version": "~0.1.0"
     },
     "tool-sreccat": {
       "owner": "platformio",
@@ -70,37 +49,11 @@
       "owner": "platformio",
       "version": "~2.1100.0"
     },
-    "tool-nrfjprog": {
-      "type": "uploader",
-      "optional": true,
-      "owner": "platformio",
-      "version": "~1.90702.0"
-    },
     "tool-jlink": {
       "type": "uploader",
       "optional": true,
       "owner": "platformio",
       "version": "^1.63208.0"
-    },
-    "tool-cmake": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "~3.21.0"
-    },
-    "tool-dtc": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "~1.4.7"
-    },
-    "tool-ninja": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "^1.7.0"
-    },
-    "tool-gperf": {
-      "optional": true,
-      "owner": "platformio",
-      "version": "^3.0.0"
     }
   }
 }
