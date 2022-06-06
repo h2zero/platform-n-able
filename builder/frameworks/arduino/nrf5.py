@@ -43,7 +43,8 @@ env.Append(
         "-Wall",
         "-mthumb",
         "-nostdlib",
-        "--param", "max-inline-insns-single=500"
+        "--param",
+        "max-inline-insns-single=500"
     ],
 
     CXXFLAGS=[
@@ -54,15 +55,14 @@ env.Append(
     ],
 
     CPPDEFINES=[
+        ("F_CPU", board.get("build.f_cpu")),
         ("ARDUINO", 10805),
         # For compatibility with sketches designed for AVR@16 MHz (see SPI lib)
-        ("F_CPU", "16000000L"),
         "ARDUINO_ARCH_NRF5",
         "NRF5",
-        ("DEVICE_RAM_SIZE", "16"),
-        ("__HEAP_SIZE", "0"),
-        ("__STACK_SIZE", "400"),
-        "%s" % board.get("build.mcu", "")[0:5].upper()
+        ("RIOT_VERSION", 1),
+        "%s" % "NRF52_SERIES" if "NRF52" in board.get("build.mcu", "").upper() else "NRF51",
+        "%s" % board.get("build.mcu", "").upper()
     ],
 
     LIBPATH=[
@@ -77,6 +77,8 @@ env.Append(
         join(FRAMEWORK_DIR, "cores", board.get("build.core"),
              "nordic", "nrfx", "drivers", "include"),
         join(FRAMEWORK_DIR, "cores", board.get("build.core"),
+             "nordic", "nrfx", "drivers", "src"),
+        join(FRAMEWORK_DIR, "cores", board.get("build.core"),
              "nordic", "nrfx", "hal"),
         join(FRAMEWORK_DIR, "cores", board.get("build.core"),
              "nordic", "nrfx", "mdk"),
@@ -85,17 +87,17 @@ env.Append(
         join(FRAMEWORK_DIR, "cores", board.get("build.core"),
              "CMSIS", "Include"),
         join(FRAMEWORK_DIR, "cores", board.get("build.core"),
+            "nimble_config"),
+        join(FRAMEWORK_DIR, "cores", board.get("build.core"),
+            "BLEBond_nvs"),
+        join(FRAMEWORK_DIR, "cores", board.get("build.core"),
              "FC_Store"),
         join(FRAMEWORK_DIR, "cores", board.get("build.core"),
              "TinyUSB"),
         join(FRAMEWORK_DIR, "cores", board.get("build.core"),
              "TinyUSB", "Adafruit_TinyUSB_ArduinoCore"),
         join(FRAMEWORK_DIR, "cores", board.get("build.core"),
-             "TinyUSB", "Adafruit_TinyUSB_ArduinoCore", "tinyusb", "src"),
-        join(FRAMEWORK_DIR, "cores", board.get("build.core"),
-            "nimble_config"),
-        join(FRAMEWORK_DIR, "cores", board.get("build.core"),
-            "BLEBond_nvs")
+             "TinyUSB", "Adafruit_TinyUSB_ArduinoCore", "tinyusb", "src")
     ],
 
     LINKFLAGS=[
@@ -141,55 +143,11 @@ env.Append(
     ASFLAGS=env.get("CCFLAGS", [])[:]
 )
 
-# Process softdevice options
-softdevice_ver = None
-ldscript_path = None
 cpp_defines = env.Flatten(env.get("CPPDEFINES", []))
-if "NRF52_S132" in cpp_defines:
-    softdevice_ver = "s132"
-elif "NRF51_S130" in cpp_defines:
-    softdevice_ver = "s130"
-elif "NRF51_S110" in cpp_defines:
-    softdevice_ver = "s110"
-
-if softdevice_ver:
-
-    env.Append(
-        CPPPATH=[
-            join(FRAMEWORK_DIR, "cores", board.get("build.core"),
-                 "SDK", "components", "softdevice", softdevice_ver, "headers")
-        ],
-
-        CPPDEFINES=["%s" % softdevice_ver.upper()]
-    )
-
-    hex_path = join(FRAMEWORK_DIR, "cores", board.get("build.core"),
-                    "SDK", "components", "softdevice", softdevice_ver, "hex")
-
-    for f in listdir(hex_path):
-        if f.endswith(".hex") and f.lower().startswith(softdevice_ver):
-            env.Append(SOFTDEVICEHEX=join(hex_path, f))
-
-    if "SOFTDEVICEHEX" not in env:
-        print("Warning! Cannot find an appropriate softdevice binary!")
-
-    # Update linker script:
-    ldscript_dir = join(FRAMEWORK_DIR, "cores",
-                        board.get("build.core"), "SDK",
-                        "components", "softdevice", softdevice_ver,
-                        "toolchain", "armgcc")
-    mcu_family = board.get("build.arduino.ldscript", "").split("_")[1]
-    for f in listdir(ldscript_dir):
-        if f.endswith(mcu_family) and softdevice_ver in f.lower():
-            ldscript_path = join(ldscript_dir, f)
-
-    if not ldscript_path:
-        print("Warning! Cannot find an appropriate linker script for the "
-              "required softdevice!")
 
 if not board.get("build.ldscript", ""):
     # if SoftDevice is not specified use default ld script from the framework
-    env.Replace(LDSCRIPT_PATH=ldscript_path or board.get("build.arduino.ldscript", ""))
+    env.Replace(LDSCRIPT_PATH=board.get("build.arduino.ldscript", ""))
 
 # Select crystal oscillator as the low frequency source by default
 clock_options = ("USE_LFXO", "USE_LFRC", "USE_LFSYNT")

@@ -5,7 +5,7 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DARDUINO_BLE_NANO",
+    "extra_flags": "-DARDUINO_BLE_NANO -DDEVICE_RAM_SIZE=32 -D__STACK_SIZE=800",
     "f_cpu": "16000000L",
     "mcu": "nrf51822",
     "variant": "BLENano",
@@ -25,7 +25,6 @@
   },
   "frameworks": [
     "arduino",
-    "mbed",
     "zephyr"
   ],
   "name": "RedBearLab BLE Nano 1.5",
@@ -38,8 +37,7 @@
       "blackmagic",
       "jlink",
       "stlink",
-      "nrfjprog",
-      "mbed"
+      "nrfjprog"
     ]
   },
   "url": "https://developer.mbed.org/platforms/RedBearLab-BLE-Nano/",

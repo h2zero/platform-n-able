@@ -5,7 +5,7 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DARDUINO_CALLIOPE_MINI -DUSE_LFRC",
+    "extra_flags": "-DARDUINO_CALLIOPE_MINI -DUSE_LFRC -DDEVICE_RAM_SIZE=16 -D__STACK_SIZE=400",
     "f_cpu": "16000000L",
     "mcu": "nrf51822",
     "variant": "CalliopeMini"

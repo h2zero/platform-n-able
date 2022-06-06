@@ -5,7 +5,7 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DARDUINO_SINOBIT",
+    "extra_flags": "-DARDUINO_SINOBIT -DDEVICE_RAM_SIZE=16 -D__STACK_SIZE=400",
     "f_cpu": "32000000L",
     "mcu": "nrf51822",
     "variant": "Sinobit"
@@ -22,7 +22,7 @@
   ],
   "name": "Sino:Bit",
   "upload": {
-    "maximum_ram_size": 32768,
+    "maximum_ram_size": 16384,
     "maximum_size": 262144,
     "protocol": "jlink",
     "protocols": [

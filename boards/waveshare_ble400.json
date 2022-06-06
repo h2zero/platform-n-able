@@ -5,8 +5,8 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DARDUINO_WAVESHARE_BLE400",
-    "f_cpu": "32000000L",
+    "extra_flags": "-DARDUINO_WAVESHARE_BLE400 -DDEVICE_RAM_SIZE=16 -D__STACK_SIZE=400",
+    "f_cpu": "16000000L",
     "mcu": "nrf51822",
     "variant": "Waveshare_BLE400",
     "zephyr": {
@@ -26,7 +26,7 @@
   ],
   "name": "Waveshare BLE400",
   "upload": {
-    "maximum_ram_size": 32768,
+    "maximum_ram_size": 16384,
     "maximum_size": 262144,
     "protocol": "jlink",
     "protocols": [

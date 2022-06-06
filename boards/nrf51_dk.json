@@ -5,7 +5,7 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DPCA10000",
+    "extra_flags": "-DPCA10000 -DDEVICE_RAM_SIZE=16 -D__STACK_SIZE=400",
     "f_cpu": "32000000L",
     "mcu": "nrf51822",
     "variant": "PCA1000X",
@@ -34,7 +34,7 @@
   ],
   "name": "Nordic nRF51X22 Development Kit(PCA1000X)",
   "upload": {
-    "maximum_ram_size": 32768,
+    "maximum_ram_size": 16384,
     "maximum_size": 262144,
     "protocol": "jlink",
     "protocols": [

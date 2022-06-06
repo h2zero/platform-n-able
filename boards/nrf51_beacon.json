@@ -5,7 +5,7 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DARDUINO_BOARD_PCA20006",
+    "extra_flags": "-DARDUINO_BOARD_PCA20006 -DDEVICE_RAM_SIZE=16 -D__STACK_SIZE=400",
     "f_cpu": "32000000L",
     "mcu": "nrf51822",
     "variant": "PCA20006"
@@ -29,7 +29,7 @@
   ],
   "name": "Nordic Beacon Kit (PCA20006)",
   "upload": {
-    "maximum_ram_size": 32768,
+    "maximum_ram_size": 16384,
     "maximum_size": 262144,
     "protocol": "jlink",
     "protocols": [

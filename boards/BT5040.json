@@ -1,0 +1,42 @@
+{
+    "build": {
+      "arduino":{
+        "ldscript": "nrf52840_dongle.ld"
+      },
+      "core": "nRF5",
+      "cpu": "cortex-m4",
+      "extra_flags": "-DARDUINO_NRF52_DK -D__STACK_SIZE=2048 -DUSE_TINYUSB -D__STACK_SIZE=2048 -DUSB_VID=0x239A -DUSB_PID=0x8029",
+      "f_cpu": "64000000L",
+      "mcu": "nrf52840_xxaa",
+      "variant": "BT5040"
+    },
+    "connectivity": [
+      "bluetooth"
+    ],
+    "debug": {
+      "default_tools": [
+        "jlink"
+      ],
+      "jlink_device": "nRF52840_xxAA",
+      "svd_path": "nrf52840.svd"
+    },
+    "frameworks": [
+      "arduino",
+      "zephyr"
+    ],
+    "name": "E104-BT5040",
+    "upload": {
+      "maximum_ram_size": 262144,
+      "maximum_size": 913408,
+      "protocol": "jlink",
+      "protocols": [
+        "jlink",
+        "nrfjprog",
+        "stlink",
+        "blackmagic",
+        "cmsis-dap"
+      ]
+    },
+    "url": "https://www.ebyte.com/en/product-view-news.html?id=1267",
+    "vendor": "Ebyte"
+  }

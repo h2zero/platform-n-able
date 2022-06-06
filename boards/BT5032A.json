@@ -1,0 +1,41 @@
+{
+    "build": {
+      "arduino":{
+        "ldscript": "nrf52_xxaa.ld"
+      },
+      "core": "nRF5",
+      "cpu": "cortex-m4",
+      "extra_flags": "-DARDUINO_NRF52_DK -D__STACK_SIZE=2048",
+      "f_cpu": "64000000L",
+      "mcu": "nrf52832_xxaa",
+      "variant": "BT5032A",
+      "zephyr": {
+         "variant": "nrf52dk_nrf52832"
+      }
+    },
+    "connectivity": [
+      "bluetooth"
+    ],
+    "debug": {
+      "jlink_device": "nRF52832_xxAA",
+      "svd_path": "nrf52.svd"
+    },
+    "frameworks": [
+      "arduino",
+      "zephyr"
+    ],
+    "name": "E104-BT5032A-TB",
+    "upload": {
+      "maximum_ram_size": 65536,
+      "maximum_size": 524288,
+      "protocol": "jlink",
+      "protocols": [
+        "jlink",
+        "nrfjprog",
+        "stlink",
+        "blackmagic"
+      ]
+    },
+    "url": "https://www.ebyte.com/en/product-view-news.html?id=956",
+    "vendor": "Ebyte"
+  }

@@ -5,7 +5,7 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DARDUINO_BBC_MICROBIT -DUSE_LFRC",
+    "extra_flags": "-DARDUINO_BBC_MICROBIT -DUSE_LFRC -DDEVICE_RAM_SIZE=16 -D__STACK_SIZE=400",
     "f_cpu": "16000000L",
     "mcu": "nrf51822",
     "variant": "BBCmicrobit",
@@ -25,7 +25,6 @@
   },
   "frameworks": [
     "arduino",
-    "mbed",
     "zephyr"
   ],
   "name": "BBC micro:bit",
