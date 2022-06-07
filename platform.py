@@ -111,7 +111,7 @@ class NablePlatform(PlatformBase):
                         "-c",
                         "transport select hla_swd; set WORKAREASIZE 0x4000"
                     ])
-                server_args.extend(["-f", "target/nrf51.cfg"])
+                server_args.extend(["-f", "target/%s.cfg" % board.manifest.get("build", "")["mcu"][0:5].lower()])
                 debug["tools"][link] = {
                     "server": {
                         "package": "tool-openocd",
