@@ -12,7 +12,7 @@
     "nRF5"
   ],
   "engines": {
-    "platformio": "^5"
+    "platformio": "^6"
   },
   "repository": {
     "type": "git",
@@ -36,12 +36,22 @@
     },
     "framework-n-able": {
       "type": "framework",
-      "optional": true,
       "version": "~0.1.0"
     },
-    "tool-sreccat": {
+    "tool-adafruit-nrfutil": {
       "owner": "platformio",
-      "version": "~1.164.0"
+      "optional": true,
+      "version": "~1.503.0"
+    },
+    "tool-bossac-nordicnrf52": {
+      "optional": true,
+      "version": "~1.10866.0"
+    },
+    "tool-nrfjprog": {
+      "type": "uploader",
+      "optional": true,
+      "owner": "platformio",
+      "version": "~1.90702.0"
     },
     "tool-openocd": {
       "type": "uploader",
@@ -54,6 +64,10 @@
       "optional": true,
       "owner": "platformio",
       "version": "^1.63208.0"
+    },
+    "tool-sreccat": {
+      "owner": "platformio",
+      "version": "~1.164.0"
     }
   }
 }

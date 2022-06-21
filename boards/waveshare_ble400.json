@@ -8,10 +8,7 @@
     "extra_flags": "-DARDUINO_WAVESHARE_BLE400 -DDEVICE_RAM_SIZE=16 -D__STACK_SIZE=400",
     "f_cpu": "16000000L",
     "mcu": "nrf51822",
-    "variant": "Waveshare_BLE400",
-    "zephyr": {
-       "variant": "nrf51_ble400"
-    }
+    "variant": "Waveshare_BLE400"
   },
   "connectivity": [
     "bluetooth"
@@ -21,8 +18,7 @@
     "svd_path": "nrf51.svd"
   },
   "frameworks": [
-    "arduino",
-    "zephyr"
+    "arduino"
   ],
   "name": "Waveshare BLE400",
   "upload": {

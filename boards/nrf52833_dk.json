@@ -1,20 +1,20 @@
 {
     "build": {
       "arduino":{
-        "ldscript": "nrf52_xxaa.ld"
+        "ldscript": "nrf52833_xxaa.ld"
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_NRF52_DK -D__STACK_SIZE=2048",
+      "extra_flags": "-DARDUINO_NRF52833_DK -D__STACK_SIZE=2048",
       "f_cpu": "64000000L",
-      "mcu": "nrf52832_xxaa",
-      "variant": "nRF52DK"
+      "mcu": "nrf52833_xxaa",
+      "variant": "nrf52833DK"
     },
     "connectivity": [
       "bluetooth"
     ],
     "debug": {
-      "default_tools": [
+      "onboard_tools": [
         "jlink"
       ],
       "jlink_device": "nRF52832_xxAA",
@@ -27,9 +27,9 @@
     "frameworks": [
       "arduino"
     ],
-    "name": "Nordic nRF52-DK",
+    "name": "nRF52833 Dev Kit",
     "upload": {
-      "maximum_ram_size": 65536,
+      "maximum_ram_size": 131072,
       "maximum_size": 524288,
       "protocol": "jlink",
       "protocols": [
@@ -40,6 +40,6 @@
         "cmsis-dap"
       ]
     },
-    "url": "https://www.nordicsemi.com/Products/Development-hardware/nRF52-DK/",
+    "url": "https://www.nordicsemi.com/Products/Development-hardware/nrf52833-dk/",
     "vendor": "Nordic"
   }

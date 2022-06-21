@@ -129,12 +129,16 @@ if "BOARD" in env:
 
 if board.get("build.cpu") == "cortex-m4":
     env.Append(
+        ASFLAGS=[
+            "-mfloat-abi=hard",
+            "-mfpu=fpv4-sp-d16",
+        ],
         CCFLAGS=[
-            "-mfloat-abi=softfp",
+            "-mfloat-abi=hard",
             "-mfpu=fpv4-sp-d16"
         ],
         LINKFLAGS=[
-            "-mfloat-abi=softfp",
+            "-mfloat-abi=hard",
             "-mfpu=fpv4-sp-d16"
         ]
     )
@@ -165,11 +169,10 @@ if "build.variant" in board:
         join(FRAMEWORK_DIR, "variants", board.get("build.variant"))
     ])
 
-    libs.append(
-        env.BuildLibrary(
-            join("$BUILD_DIR", "FrameworkArduinoVariant"),
-            join(FRAMEWORK_DIR, "variants",
-                 board.get("build.variant"))))
+    env.BuildSources(
+        join("$BUILD_DIR", "FrameworkArduinoVariant"),
+        join(FRAMEWORK_DIR, "variants",
+                board.get("build.variant")))
 
 libs.append(
     env.BuildLibrary(

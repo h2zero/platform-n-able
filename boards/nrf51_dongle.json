@@ -6,12 +6,9 @@
     "core": "nRF5",
     "cpu": "cortex-m0",
     "extra_flags": "-DARDUINO_GENERIC -DDEVICE_RAM_SIZE=32 -D__STACK_SIZE=800",
-    "f_cpu": "32000000L",
+    "f_cpu": "16000000L",
     "mcu": "nrf51822",
-    "variant": "nRF51Dongle",
-    "zephyr": {
-       "variant": "nrf51dongle_nrf51422"
-    }
+    "variant": "nRF51Dongle"
   },
   "connectivity": [
     "bluetooth"
@@ -28,9 +25,7 @@
     "svd_path": "nrf51.svd"
   },
   "frameworks": [
-    "arduino",
-    "mbed",
-    "zephyr"
+    "arduino"
   ],
   "name": "Nordic nRF51 Dongle (PCA10031)",
   "upload": {
@@ -40,10 +35,9 @@
     "protocols": [
       "cmsis-dap",
       "jlink",
-      "nrfjprog",
-      "mbed"
+      "nrfjprog"
     ]
   },
-  "url": "https://developer.mbed.org/platforms/Nordic-nRF51-Dongle/",
+  "url": "https://www.nordicsemi.com/Products/Development-hardware/nRF51-Dongle",
   "vendor": "Nordic"
 }

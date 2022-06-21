@@ -5,37 +5,44 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_NRF52_DK -D__STACK_SIZE=2048 -DUSE_TINYUSB -D__STACK_SIZE=2048 -DUSB_VID=0x239A -DUSB_PID=0x8029",
+      "extra_flags": "-DARDUINO_BT5040 -D__STACK_SIZE=2048 -DUSE_TINYUSB -DUSB_CDC_DEFAULT_SERIAL -D__STACK_SIZE=2048 -DUSB_VID=0x1915 -DUSB_PID=0x521B",
       "f_cpu": "64000000L",
       "mcu": "nrf52840_xxaa",
-      "variant": "BT5040"
+      "variant": "BT5040",
+      "hwids": [
+        [
+          "0x239A",
+          "0x8029"
+        ]
+      ]
     },
     "connectivity": [
       "bluetooth"
     ],
     "debug": {
-      "default_tools": [
-        "jlink"
-      ],
       "jlink_device": "nRF52840_xxAA",
       "svd_path": "nrf52840.svd"
     },
     "frameworks": [
-      "arduino",
-      "zephyr"
+      "arduino"
     ],
     "name": "E104-BT5040",
     "upload": {
       "maximum_ram_size": 262144,
       "maximum_size": 913408,
-      "protocol": "jlink",
+      "speed": 115200,
+      "protocol": "nrfutil",
       "protocols": [
         "jlink",
         "nrfjprog",
+        "nrfutil",
         "stlink",
         "blackmagic",
         "cmsis-dap"
-      ]
+      ],
+      "use_1200bps_touch": true,
+      "require_upload_port": true,
+      "wait_for_upload_port": true
     },
     "url": "https://www.ebyte.com/en/product-view-news.html?id=1267",
     "vendor": "Ebyte"

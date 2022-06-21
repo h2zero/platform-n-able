@@ -15,15 +15,50 @@
 import sys
 from platform import system
 from os import makedirs
-from os.path import isdir, join
+from os.path import isdir, join, basename
+
+IS_WINDOWS = sys.platform.startswith("win")
+IS_MACOS = sys.platform.startswith("darwin")
 
 from SCons.Script import (ARGUMENTS, COMMAND_LINE_TARGETS, AlwaysBuild,
                           Builder, Default, DefaultEnvironment)
 
+from platformio.public import list_serial_ports
+
+
+def BeforeUpload(target, source, env):  # pylint: disable=W0613,W0621
+    env.AutodetectUploadPort()
+
+    upload_options = {}
+    if "BOARD" in env:
+        upload_options = env.BoardConfig().get("upload", {})
+
+    if not bool(upload_options.get("disable_flushing", False)):
+        env.FlushSerialBuffer("$UPLOAD_PORT")
+
+    before_ports = list_serial_ports()
+
+    if bool(upload_options.get("use_1200bps_touch", False)):
+        env.TouchSerialPort("$UPLOAD_PORT", 1200)
+
+    if bool(upload_options.get("wait_for_upload_port", False)):
+        env.Replace(UPLOAD_PORT=env.WaitForNewSerialPort(before_ports))
+
+    # use only port name for BOSSA
+    if ("/" in env.subst("$UPLOAD_PORT") and
+            env.subst("$UPLOAD_PROTOCOL") == "sam-ba"):
+        env.Replace(UPLOAD_PORT=basename(env.subst("$UPLOAD_PORT")))
+
+
+def AfterUpload(target, source, env):  # pylint: disable=W0613,W0621
+    before_ports = list_serial_ports()
+    env.WaitForNewSerialPort(before_ports)
+
+
 env = DefaultEnvironment()
-env.SConscript("compat.py", exports="env")
 platform = env.PioPlatform()
 board = env.BoardConfig()
+board_nrf_type = int(board.get("build.mcu", "")[3:5])
 
 env.Replace(
     AR="arm-none-eabi-ar",
@@ -42,7 +77,7 @@ env.Replace(
     SIZECHECKCMD="$SIZETOOL -A -d $SOURCES",
     SIZEPRINTCMD='$SIZETOOL -B -d $SOURCES',
 
-    ERASEFLAGS=["--eraseall", "-f", "nrf51"],
+    ERASEFLAGS=["--eraseall", "-f", "nrf%d" % board_nrf_type],
     ERASECMD="nrfjprog $ERASEFLAGS",
 
     PROGSUFFIX=".elf"
@@ -76,23 +111,67 @@ env.Append(
             ]), "Building $TARGET"),
             suffix=".hex"
         ),
-        MergeHex=Builder(
-            action=env.VerboseAction(" ".join([
-                '"%s"' % join(platform.get_package_dir("tool-sreccat") or "",
-                    "srec_cat"),
-                '"$SOFTDEVICEHEX"',
-                "-intel",
-                "$SOURCES",
-                "-intel",
-                "-o",
-                "$TARGET",
-                "-intel",
-                "--line-length=44"
-            ]), "Building $TARGET"),
-            suffix=".hex"
-        )
     )
 )
+
+upload_protocol = env.subst("$UPLOAD_PROTOCOL")
+
+if upload_protocol == "nrfutil":
+    FRAMEWORK_DIR = platform.get_package_dir("framework-n-able")
+    if IS_WINDOWS:
+        nrfutil_path = join(FRAMEWORK_DIR, "tools", "nrfutil", "nrfutil.exe")
+    elif IS_MACOS:
+        nrfutil_path = join(FRAMEWORK_DIR, "tools", "nrfutil", "nrfutil-mac")
+    else:
+        nrfutil_path = "nrfutil"
+
+    env.Append(
+        BUILDERS=dict(
+            PackageDfu=Builder(
+                action=env.VerboseAction(" ".join([
+                    '"%s"' % nrfutil_path,
+                    "pkg",
+                    "generate",
+                    "--hw-version",
+                    "%d" % board_nrf_type,
+                    "--sd-req",
+                    "0",
+                    "--debug-mode",
+                    "--application",
+                    "$SOURCES",
+                    "$TARGET"
+                ]), "Building $TARGET"),
+                suffix=".zip"
+            ),
+        )
+    )
+
+elif "adafruit-nrfutil" == upload_protocol:
+    nrfutil_path = ""
+    env.Append(
+        BUILDERS=dict(
+            PackageDfu=Builder(
+                action=env.VerboseAction(" ".join([
+                    '"$PYTHONEXE"',
+                    '"%s"' % join(platform.get_package_dir(
+                        "tool-adafruit-nrfutil") or "", "adafruit-nrfutil.py"),
+                    "dfu",
+                    "genpkg",
+                    "--dev-type",
+                    "0x0052",
+                    "--sd-req",
+                    "none",
+                    "--application",
+                    "$SOURCES",
+                    "$TARGET"
+                ]), "Building $TARGET"),
+                suffix=".zip"
+            ),
+        )
+    )
+
+else:
+    nrfutil_path = ""
 
 if not env.get("PIOFRAMEWORK"):
     env.SConscript("frameworks/_bare.py")
@@ -101,23 +180,20 @@ if not env.get("PIOFRAMEWORK"):
 # Target: Build executable and linkable firmware
 #
 
-if "zephyr" in env.get("PIOFRAMEWORK", []):
-    env.SConscript(
-        join(platform.get_package_dir(
-            "framework-zephyr"), "scripts", "platformio", "platformio-build-pre.py"),
-        exports={"env": env}
-    )
-
 target_elf = None
 if "nobuild" in COMMAND_LINE_TARGETS:
     target_elf = join("$BUILD_DIR", "${PROGNAME}.elf")
     target_firm = join("$BUILD_DIR", "${PROGNAME}.hex")
 else:
     target_elf = env.BuildProgram()
-    if "SOFTDEVICEHEX" in env:
-        target_firm = env.MergeHex(
+    if "nrfutil" == upload_protocol:
+        target_firm = env.PackageDfu(
             join("$BUILD_DIR", "${PROGNAME}"),
-            env.ElfToHex(join("$BUILD_DIR", "userfirmware"), target_elf))
+            env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf))
+    elif "adafruit-nrfutil" == upload_protocol:
+        target_firm = env.PackageDfu(
+            join("$BUILD_DIR", "${PROGNAME}"),
+            env.ElfToHex(join("$BUILD_DIR", "${PROGNAME}"), target_elf))
     else:
         target_firm = env.ElfToHex(
             join("$BUILD_DIR", "${PROGNAME}"), target_elf)
@@ -142,23 +218,16 @@ target_size = env.AddPlatformTarget(
 # Target: Upload by default .bin file
 #
 
-upload_protocol = env.subst("$UPLOAD_PROTOCOL")
 debug_tools = board.get("debug.tools", {})
 upload_actions = []
 
-if upload_protocol == "mbed":
-    upload_actions = [
-        env.VerboseAction(env.AutodetectUploadPort, "Looking for upload disk..."),
-        env.VerboseAction(env.UploadToDisk, "Uploading $SOURCE")
-    ]
-
-elif upload_protocol.startswith("blackmagic"):
+if upload_protocol.startswith("blackmagic"):
     env.Replace(
         UPLOADER="$GDB",
         UPLOADERFLAGS=[
             "-nx",
             "--batch",
-            "-ex", "target extended-remote $UPLOAD_PORT",
+            "-ex", "target extended-remote %s$UPLOAD_PORT" % '\\\\.\\' if IS_WINDOWS else '',
             "-ex", "monitor %s_scan" %
             ("jtag" if upload_protocol == "blackmagic-jtag" else "swdp"),
             "-ex", "attach 1",
@@ -183,6 +252,71 @@ elif upload_protocol == "nrfjprog":
         UPLOADCMD="$UPLOADER $UPLOADERFLAGS --program $SOURCE"
     )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
+
+elif upload_protocol == "nrfutil":
+ #   try:
+ #       import nordicsemi
+ #   except ImportError:
+ #       env.Execute('$PYTHONEXE -m pip install --upgrade "protobuf<4" "nrfutil==6.1.3"')
+        #env.VerboseAction(
+        #    '$PYTHONEXE -m pip install --upgrade "protobuf<4" "nrfutil==6.1.3"',
+        #    "Installing nrfutil"
+        #)
+
+  # do install
+    env.Replace(
+        UPLOADER=nrfutil_path,
+        UPLOADERFLAGS=[
+            "dfu",
+            "serial",
+            "-p",
+            "$UPLOAD_PORT",
+            "-b",
+            "$UPLOAD_SPEED",
+        ],
+        UPLOADCMD='$UPLOADER $UPLOADERFLAGS -pkg $SOURCE'
+    )
+    upload_actions = [
+        env.VerboseAction(BeforeUpload, "Looking for upload port..."),
+        env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE"),
+        env.VerboseAction(AfterUpload, "Looking for upload port..."),
+    ]
+
+elif upload_protocol == "adafruit-nrfutil":
+    env.Replace(
+        UPLOADER=join(platform.get_package_dir(
+            "tool-adafruit-nrfutil") or "", "adafruit-nrfutil.py"),
+        UPLOADERFLAGS=[
+            "dfu",
+            "serial",
+            "-p",
+            "$UPLOAD_PORT",
+            "-b",
+            "$UPLOAD_SPEED",
+            "--singlebank",
+        ],
+        UPLOADCMD='"$PYTHONEXE" "$UPLOADER" $UPLOADERFLAGS -pkg $SOURCE'
+    )
+    upload_actions = [
+        env.VerboseAction(BeforeUpload, "Looking for upload port..."),
+        env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")
+    ]
+
+elif upload_protocol == "sam-ba":
+    env.Replace(
+        UPLOADER="bossac",
+        UPLOADERFLAGS=[
+            "--port", '"$UPLOAD_PORT"', "--write", "--erase", "-U", "--reset"
+        ],
+        UPLOADCMD="$UPLOADER $UPLOADERFLAGS $SOURCES"
+    )
+    if int(ARGUMENTS.get("PIOVERBOSE", 0)):
+        env.Prepend(UPLOADERFLAGS=["--info", "--debug"])
+
+    upload_actions = [
+        env.VerboseAction(BeforeUpload, "Looking for upload port..."),
+        env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")
+    ]
 
 elif upload_protocol.startswith("jlink"):
 

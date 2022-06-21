@@ -6,7 +6,7 @@
     "core": "nRF5",
     "cpu": "cortex-m0",
     "extra_flags": "-DARDUINO_BOARD_PCA20006 -DDEVICE_RAM_SIZE=16 -D__STACK_SIZE=400",
-    "f_cpu": "32000000L",
+    "f_cpu": "16000000L",
     "mcu": "nrf51822",
     "variant": "PCA20006"
   },

@@ -8,10 +8,7 @@
     "extra_flags": "-DARDUINO_BLE_NANO -DDEVICE_RAM_SIZE=32 -D__STACK_SIZE=800",
     "f_cpu": "16000000L",
     "mcu": "nrf51822",
-    "variant": "BLENano",
-    "zephyr": {
-       "variant": "nrf51_blenano"
-    }
+    "variant": "BLENano"
   },
   "connectivity": [
     "bluetooth"
@@ -24,8 +21,7 @@
     "svd_path": "nrf51.svd"
   },
   "frameworks": [
-    "arduino",
-    "zephyr"
+    "arduino"
   ],
   "name": "RedBearLab BLE Nano 1.5",
   "upload": {
@@ -40,6 +36,6 @@
       "nrfjprog"
     ]
   },
-  "url": "https://developer.mbed.org/platforms/RedBearLab-BLE-Nano/",
+  "url": "https://www.sparkfun.com/products/retired/13730",
   "vendor": "RedBearLab"
 }

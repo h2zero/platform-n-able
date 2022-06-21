@@ -8,10 +8,7 @@
     "extra_flags": "-DARDUINO_BBC_MICROBIT -DUSE_LFRC -DDEVICE_RAM_SIZE=16 -D__STACK_SIZE=400",
     "f_cpu": "16000000L",
     "mcu": "nrf51822",
-    "variant": "BBCmicrobit",
-    "zephyr": {
-       "variant": "bbc_microbit"
-    }
+    "variant": "BBCmicrobit"
   },
   "connectivity": [
     "bluetooth"
@@ -24,8 +21,7 @@
     "jlink_device": "nRF51822_xxAA"
   },
   "frameworks": [
-    "arduino",
-    "zephyr"
+    "arduino"
   ],
   "name": "BBC micro:bit",
   "upload": {
@@ -34,10 +30,9 @@
     "protocol": "cmsis-dap",
     "protocols": [
       "cmsis-dap",
-      "mbed",
       "jlink"
     ]
   },
-  "url": "https://developer.mbed.org/platforms/Microbit/",
+  "url": "https://microbit.org/",
   "vendor": "BBC"
 }
