@@ -7,8 +7,8 @@
     "cpu": "cortex-m0",
     "extra_flags": "-DARDUINO_GENERIC -DDEVICE_RAM_SIZE=32 -D__STACK_SIZE=800",
     "f_cpu": "16000000L",
-    "mcu": "nrf51822",
-    "variant": "nRF51Dongle"
+    "mcu": "nrf51822_xxac",
+    "variant": "nRF51_Dongle"
   },
   "connectivity": [
     "bluetooth"

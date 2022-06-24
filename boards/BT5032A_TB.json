@@ -5,29 +5,22 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_NRF52_DK -D__STACK_SIZE=2048",
+      "extra_flags": "-DARDUINO_BT5032A -D__STACK_SIZE=2048",
       "f_cpu": "64000000L",
       "mcu": "nrf52832_xxaa",
-      "variant": "nRF52DK"
+      "variant": "BT5032A_TB"
     },
     "connectivity": [
       "bluetooth"
     ],
     "debug": {
-      "default_tools": [
-        "jlink"
-      ],
       "jlink_device": "nRF52832_xxAA",
-      "onboard_tools": [
-        "cmsis-dap",
-        "jlink"
-      ],
       "svd_path": "nrf52.svd"
     },
     "frameworks": [
       "arduino"
     ],
-    "name": "Nordic nRF52-DK",
+    "name": "E104-BT5032A-TB",
     "upload": {
       "maximum_ram_size": 65536,
       "maximum_size": 524288,
@@ -36,10 +29,10 @@
         "jlink",
         "nrfjprog",
         "stlink",
-        "blackmagic",
-        "cmsis-dap"
+        "cmsis-dap",
+        "blackmagic"
       ]
     },
-    "url": "https://www.nordicsemi.com/Products/Development-hardware/nRF52-DK/",
-    "vendor": "Nordic"
+    "url": "https://www.ebyte.com/en/product-view-news.html?id=956",
+    "vendor": "Ebyte"
   }

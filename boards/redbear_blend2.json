@@ -1,37 +1,33 @@
 {
     "build": {
       "arduino":{
-        "ldscript": "nrf52833_xxaa.ld"
+        "ldscript": "nrf52_xxaa.ld"
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_NRF52833_DK -D__STACK_SIZE=2048",
+      "extra_flags": "-DARDUINO_RB_BLEND_2 -D__STACK_SIZE=2048",
       "f_cpu": "64000000L",
-      "mcu": "nrf52833_xxaa",
-      "variant": "nRF52833_DK"
+      "mcu": "nrf52832_xxaa",
+      "variant": "RedBear_Blend2"
     },
     "connectivity": [
       "bluetooth"
     ],
     "debug": {
-      "onboard_tools": [
-        "jlink"
-      ],
       "jlink_device": "nRF52832_xxAA",
       "onboard_tools": [
-        "cmsis-dap",
-        "jlink"
+        "cmsis-dap"
       ],
       "svd_path": "nrf52.svd"
     },
     "frameworks": [
       "arduino"
     ],
-    "name": "nRF52833 Dev Kit",
+    "name": "RedBearLab Blend 2",
     "upload": {
-      "maximum_ram_size": 131072,
+      "maximum_ram_size": 65536,
       "maximum_size": 524288,
-      "protocol": "jlink",
+      "protocol": "cmsis-dap",
       "protocols": [
         "jlink",
         "nrfjprog",
@@ -40,6 +36,6 @@
         "cmsis-dap"
       ]
     },
-    "url": "https://www.nordicsemi.com/Products/Development-hardware/nrf52833-dk/",
-    "vendor": "Nordic"
+    "url": "https://redbear.cc/product/ble/blend-2.html",
+    "vendor": "RedBearLab"
   }

@@ -5,10 +5,10 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_BT5032A -D__STACK_SIZE=2048",
+      "extra_flags": "-DARDUINO_ELECTRONUT_BLUEY -D__STACK_SIZE=204",
       "f_cpu": "64000000L",
       "mcu": "nrf52832_xxaa",
-      "variant": "BT5032A"
+      "variant": "bluey"
     },
     "connectivity": [
       "bluetooth"
@@ -20,7 +20,7 @@
     "frameworks": [
       "arduino"
     ],
-    "name": "E104-BT5032A-TB",
+    "name": "Bluey nRF52832 IoT",
     "upload": {
       "maximum_ram_size": 65536,
       "maximum_size": 524288,
@@ -29,9 +29,10 @@
         "jlink",
         "nrfjprog",
         "stlink",
+        "cmsis-dap",
         "blackmagic"
       ]
     },
-    "url": "https://www.ebyte.com/en/product-view-news.html?id=956",
-    "vendor": "Ebyte"
+    "url": "https://electronut.in/portfolio/bluey/",
+    "vendor": "Electronut Labs"
   }
