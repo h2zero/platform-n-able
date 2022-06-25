@@ -1,11 +1,9 @@
-# Nordic nRF51: development platform for [PlatformIO](https://platformio.org)
+# Development platform for ARM BLE devices supported by [Apache NimBLE](https://github.com/apache/mynewt-nimble) for [PlatformIO](https://platformio.org)
 
 [![Build Status](https://github.com/platformio/platform-nordicnrf51/workflows/Examples/badge.svg)](https://github.com/platformio/platform-nordicnrf51/actions)
 
-The Nordic nRF51 Series is a family of highly flexible, multi-protocol, system-on-chip (SoC) devices for ultra-low power wireless applications. nRF51 Series devices support a range of protocol stacks including Bluetooth Smart (previously called Bluetooth low energy), ANT and proprietary 2.4GHz protocols such as Gazell.
+Apache NimBLE is an open-source Bluetooth 5.1 stack (both Host & Controller) that completely replaces the proprietary SoftDevice on Nordic chipsets. It is part of Apache Mynewt project. This platform aims to provide the use of the [NimBLE-Arduino library](https://github.com/h2zero/NimBLE-Arduino) for Nordic and other ARM based devices that are supported by the underlying NimBLE stack, using the [n-able Arduino core](https://github.com/h2zero/n-able).
 
-* [Home](http://platformio.org/platforms/nordicnrf51) (home page in PlatformIO Platform Registry)
-* [Documentation](http://docs.platformio.org/page/platforms/nordicnrf51.html) (advanced usage, packages, boards, frameworks, etc.)
 
 # Usage
 
@@ -15,21 +13,10 @@ The Nordic nRF51 Series is a family of highly flexible, multi-protocol, system-o
 ## Stable version
 
 ```ini
-[env:stable]
-platform = nordicnrf51
+[env]
+platform = n-able
+framework = arduino
+platform_packages = framework-n-able@https://github.com/h2zero/n-able
 board = ...
 ...
 ```
-
-## Development version
-
-```ini
-[env:development]
-platform = https://github.com/platformio/platform-nordicnrf51.git
-board = ...
-...
-```
-
-# Configuration
-
-Please navigate to [documentation](http://docs.platformio.org/page/platforms/nordicnrf51.html).
