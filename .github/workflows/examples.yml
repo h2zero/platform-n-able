@@ -7,22 +7,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-18.04, windows-latest, macos-latest]
+        os: [ubuntu-latest, windows-latest, macos-latest]
         python-version: [3.7]
         example:
-          - "examples/arduino-blink"
-          - "examples/arduino-ble-led"
-          - "examples/arduino-internal-libs"
-          - "examples/mbed-ble-thermometer"
-          - "examples/mbed-blink"
-          - "examples/mbed-serial"
-          - "examples/zephyr-ble-eddystone"
-          - "examples/zephyr-blink"
-          - "examples/zephyr-drivers-entropy"
-        exclude:
-          - {python-version: 2.7, example: "examples/zephyr-ble-eddystone"}
-          - {python-version: 2.7, example: "examples/zephyr-blink"}
-          - {python-version: 2.7, example: "examples/zephyr-drivers-entropy"}
+          - "examples/BLE-client-test"
     runs-on: ${{ matrix.os }}
     steps:
       - uses: actions/checkout@v2
