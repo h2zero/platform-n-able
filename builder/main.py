@@ -123,7 +123,7 @@ if upload_protocol == "nrfutil":
     elif IS_MACOS:
         nrfutil_path = join(FRAMEWORK_DIR, "tools", "nrfutil", "nrfutil-mac")
     else:
-        nrfutil_path = "nrfutil"
+        nrfutil_path = join(FRAMEWORK_DIR, "tools", "nrfutil", "nrfutil-linux")
 
     env.Append(
         BUILDERS=dict(
@@ -254,16 +254,6 @@ elif upload_protocol == "nrfjprog":
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 
 elif upload_protocol == "nrfutil":
- #   try:
- #       import nordicsemi
- #   except ImportError:
- #       env.Execute('$PYTHONEXE -m pip install --upgrade "protobuf<4" "nrfutil==6.1.3"')
-        #env.VerboseAction(
-        #    '$PYTHONEXE -m pip install --upgrade "protobuf<4" "nrfutil==6.1.3"',
-        #    "Installing nrfutil"
-        #)
-
-  # do install
     env.Replace(
         UPLOADER=nrfutil_path,
         UPLOADERFLAGS=[
