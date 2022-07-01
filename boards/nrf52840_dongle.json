@@ -5,7 +5,7 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_NRF52840_DONGLE -D__STACK_SIZE=2048 -DUSE_TINYUSB -DUSB_CDC_DEFAULT_SERIAL -D__STACK_SIZE=2048 -DUSB_VID=0x1915 -DUSB_PID=0x521B",
+      "extra_flags": "-DARDUINO_NRF52840_DONGLE -D__STACK_SIZE=2048 -DUSE_TINYUSB -D__STACK_SIZE=2048 -DUSB_VID=0x1915 -DUSB_PID=0x521B",
       "f_cpu": "64000000L",
       "mcu": "nrf52840_xxaa",
       "variant": "nRF52840_Dongle",
