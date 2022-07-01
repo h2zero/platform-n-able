@@ -117,19 +117,11 @@ env.Append(
 upload_protocol = env.subst("$UPLOAD_PROTOCOL")
 
 if upload_protocol == "nrfutil":
-    FRAMEWORK_DIR = platform.get_package_dir("framework-n-able")
-    if IS_WINDOWS:
-        nrfutil_path = join(FRAMEWORK_DIR, "tools", "nrfutil", "nrfutil.exe")
-    elif IS_MACOS:
-        nrfutil_path = join(FRAMEWORK_DIR, "tools", "nrfutil", "nrfutil-mac")
-    else:
-        nrfutil_path = join(FRAMEWORK_DIR, "tools", "nrfutil", "nrfutil-linux")
-
     env.Append(
         BUILDERS=dict(
             PackageDfu=Builder(
                 action=env.VerboseAction(" ".join([
-                    '"%s"' % nrfutil_path,
+                    "nrfutil",
                     "pkg",
                     "generate",
                     "--hw-version",
@@ -147,7 +139,6 @@ if upload_protocol == "nrfutil":
     )
 
 elif "adafruit-nrfutil" == upload_protocol:
-    nrfutil_path = ""
     env.Append(
         BUILDERS=dict(
             PackageDfu=Builder(
@@ -169,9 +160,6 @@ elif "adafruit-nrfutil" == upload_protocol:
             ),
         )
     )
-
-else:
-    nrfutil_path = ""
 
 if not env.get("PIOFRAMEWORK"):
     env.SConscript("frameworks/_bare.py")
@@ -254,8 +242,13 @@ elif upload_protocol == "nrfjprog":
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 
 elif upload_protocol == "nrfutil":
+    try:
+        import nordicsemi
+    except ImportError:
+        env.Execute('$PYTHONEXE -m pip install nrfutil==6.1.4')
+
     env.Replace(
-        UPLOADER=nrfutil_path,
+        UPLOADER="nrfutil",
         UPLOADERFLAGS=[
             "dfu",
             "serial",
