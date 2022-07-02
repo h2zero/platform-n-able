@@ -5,33 +5,34 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DARDUINO_BLUZ_DK -DDEVICE_RAM_SIZE=32",
+    "extra_flags": "-DARDUINO_GENERIC -DDEVICE_RAM_SIZE=32",
     "f_cpu": "16000000L",
     "mcu": "nrf51822",
-    "variant": "BluzDK"
+    "variant": "Generic"
   },
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
-    "jlink_device": "nRF51822_xxAC",
+    "jlink_device": "nRF51802_xxAC",
     "svd_path": "nrf51.svd"
   },
   "frameworks": [
     "arduino"
   ],
-  "name": "BluzDK",
+  "name": "Generic nRF51822 (xxac)",
   "upload": {
     "maximum_ram_size": 32768,
     "maximum_size": 262144,
     "protocol": "jlink",
     "protocols": [
-      "blackmagic",
       "jlink",
       "nrfjprog",
-      "stlink"
+      "stlink",
+      "cmsis-dap",
+      "blackmagic"
     ]
   },
-  "url": "https://bluz.io/",
-  "vendor": "BluzDK"
+  "url": "https://www.nordicsemi.com/Products/Bluetooth-Low-Energy",
+  "vendor": "Generic"
 }

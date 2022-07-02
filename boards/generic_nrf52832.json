@@ -5,37 +5,34 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_RB_BLEND_2",
+      "extra_flags": "-DARDUINO_GENERIC",
       "f_cpu": "64000000L",
       "mcu": "nrf52832_xxaa",
-      "variant": "RedBear_Blend2"
+      "variant": "Generic"
     },
     "connectivity": [
       "bluetooth"
     ],
     "debug": {
       "jlink_device": "nRF52832_xxAA",
-      "onboard_tools": [
-        "cmsis-dap"
-      ],
       "svd_path": "nrf52.svd"
     },
     "frameworks": [
       "arduino"
     ],
-    "name": "RedBearLab Blend 2",
+    "name": "Generic nRF52832",
     "upload": {
       "maximum_ram_size": 65536,
       "maximum_size": 524288,
-      "protocol": "cmsis-dap",
+      "protocol": "jlink",
       "protocols": [
         "jlink",
         "nrfjprog",
         "stlink",
-        "blackmagic",
-        "cmsis-dap"
+        "cmsis-dap",
+        "blackmagic"
       ]
     },
-    "url": "https://redbear.cc/product/ble/blend-2.html",
-    "vendor": "RedBearLab"
+    "url": "https://www.nordicsemi.com/Products/Bluetooth-Low-Energy",
+    "vendor": "Generic"
   }

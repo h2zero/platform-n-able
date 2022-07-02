@@ -5,10 +5,10 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DPCA10000 -DDEVICE_RAM_SIZE=16 -D__STACK_SIZE=400",
+    "extra_flags": "-DNRF51_DK -DDEVICE_RAM_SIZE=16",
     "f_cpu": "16000000L",
     "mcu": "nrf51822",
-    "variant": "PCA1000X"
+    "variant": "nRF51822_DK"
   },
   "connectivity": [
     "bluetooth"
@@ -27,7 +27,7 @@
   "frameworks": [
     "arduino"
   ],
-  "name": "Nordic nRF51X22 Development Kit(PCA1000X)",
+  "name": "Nordic nRF51822DK (PCA10028)",
   "upload": {
     "maximum_ram_size": 16384,
     "maximum_size": 262144,

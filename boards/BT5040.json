@@ -5,7 +5,7 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_BT5040 -D__STACK_SIZE=2048 -DUSE_TINYUSB -D__STACK_SIZE=2048 -DUSB_VID=0x1915 -DUSB_PID=0x521B",
+      "extra_flags": "-DARDUINO_BT5040",
       "f_cpu": "64000000L",
       "mcu": "nrf52840_xxaa",
       "variant": "nRF52840_Dongle",
@@ -13,8 +13,13 @@
         [
           "0x1915",
           "0x521B"
+        ],
+        [
+          "0x1915",
+          "0x521F"
         ]
-      ]
+      ],
+      "usb_product": "E104-BT5040UA"
     },
     "connectivity": [
       "bluetooth"

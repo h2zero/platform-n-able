@@ -143,6 +143,18 @@ if board.get("build.cpu") == "cortex-m4":
         ]
     )
 
+if "build.usb_product" in env.BoardConfig():
+    env.Append(
+        CPPDEFINES=[
+            "USBCON",
+            "USE_TINYUSB",
+            ("USB_VID", board.get("build.hwids")[0][0]),
+            ("USB_PID", board.get("build.hwids")[0][1]),
+            ("USB_PRODUCT", '\\"%s\\"' % board.get("build.usb_product", "").replace('"', "")),
+            ("USB_MANUFACTURER", '\\"%s\\"' % board.get("vendor", "").replace('"', ""))
+        ]
+    )
+
 env.Append(
     ASFLAGS=env.get("CCFLAGS", [])[:]
 )
@@ -152,11 +164,6 @@ cpp_defines = env.Flatten(env.get("CPPDEFINES", []))
 if not board.get("build.ldscript", ""):
     # if SoftDevice is not specified use default ld script from the framework
     env.Replace(LDSCRIPT_PATH=board.get("build.arduino.ldscript", ""))
-
-# Select crystal oscillator as the low frequency source by default
-clock_options = ("USE_LFXO", "USE_LFRC", "USE_LFSYNT")
-if not any(d in clock_options for d in cpp_defines):
-    env.Append(CPPDEFINES=["USE_LFXO"])
 
 #
 # Target: Build Core Library

@@ -1,0 +1,38 @@
+{
+    "build": {
+      "arduino":{
+        "ldscript": "nrf51_xxaa.ld"
+      },
+      "core": "nRF5",
+      "cpu": "cortex-m0",
+      "extra_flags": "-DARDUINO_GENERIC -DDEVICE_RAM_SIZE=16",
+      "f_cpu": "16000000L",
+      "mcu": "nrf51822",
+      "variant": "Generic"
+    },
+    "connectivity": [
+      "bluetooth"
+    ],
+    "debug": {
+      "jlink_device": "nRF51802_xxAA",
+      "svd_path": "nrf51.svd"
+    },
+    "frameworks": [
+      "arduino"
+    ],
+    "name": "Generic nRF51822 (xxaa)",
+    "upload": {
+      "maximum_ram_size": 16384,
+      "maximum_size": 262144,
+      "protocol": "jlink",
+      "protocols": [
+        "jlink",
+        "nrfjprog",
+        "stlink",
+        "cmsis-dap",
+        "blackmagic"
+      ]
+    },
+    "url": "https://www.nordicsemi.com/Products/Bluetooth-Low-Energy",
+    "vendor": "Generic"
+  }

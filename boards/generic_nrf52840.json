@@ -5,29 +5,22 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_NRF52840_DK",
+      "extra_flags": "-DARDUINO_GENERIC",
       "f_cpu": "64000000L",
       "mcu": "nrf52840_xxaa",
-      "variant": "nRF52840_DK"
+      "variant": "Generic"
     },
     "connectivity": [
       "bluetooth"
     ],
     "debug": {
-      "default_tools": [
-        "jlink"
-      ],
       "jlink_device": "nRF52840_xxAA",
-      "onboard_tools": [
-        "cmsis-dap",
-        "jlink"
-      ],
       "svd_path": "nrf52840.svd"
     },
     "frameworks": [
       "arduino"
     ],
-    "name": "Nordic nRF52840 DK (PCA10056)",
+    "name": "Generic nRF52840",
     "upload": {
       "maximum_ram_size": 262144,
       "maximum_size": 1048576,
@@ -36,10 +29,10 @@
         "jlink",
         "nrfjprog",
         "stlink",
-        "blackmagic",
-        "cmsis-dap"
+        "cmsis-dap",
+        "blackmagic"
       ]
     },
-    "url": "https://www.nordicsemi.com/Products/Development-hardware/nRF52840-DK",
-    "vendor": "Nordic"
+    "url": "https://www.nordicsemi.com/Products/Bluetooth-Low-Energy",
+    "vendor": "Generic"
   }

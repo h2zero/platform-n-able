@@ -5,7 +5,7 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_ELECTRONUT_BLUEY -D__STACK_SIZE=204",
+      "extra_flags": "-DARDUINO_ELECTRONUT_BLUEY",
       "f_cpu": "64000000L",
       "mcu": "nrf52832_xxaa",
       "variant": "bluey"
