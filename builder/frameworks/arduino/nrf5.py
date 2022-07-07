@@ -19,6 +19,7 @@ control devices attached to a wide range of Arduino boards to create all
 kinds of creative coding, interactive objects, spaces or physical experiences.
 """
 
+import sys
 from os import listdir
 from os.path import isdir, join
 
@@ -60,7 +61,6 @@ env.Append(
         # For compatibility with sketches designed for AVR@16 MHz (see SPI lib)
         "ARDUINO_ARCH_NRF5",
         "NRF5",
-        ("RIOT_VERSION", 1),
         "%s" % "NRF52_SERIES" if "NRF52" in board.get("build.mcu", "").upper() else "NRF51",
         "%s" % board.get("build.mcu", "").upper()
     ],
@@ -159,11 +159,48 @@ env.Append(
     ASFLAGS=env.get("CCFLAGS", [])[:]
 )
 
-cpp_defines = env.Flatten(env.get("CPPDEFINES", []))
-
 if not board.get("build.ldscript", ""):
-    # if SoftDevice is not specified use default ld script from the framework
     env.Replace(LDSCRIPT_PATH=board.get("build.arduino.ldscript", ""))
+
+bootloader_opts = board.get("bootloaders", "")
+bootloader_sel = env.GetProjectOption("board_bootloader", "")
+ldscript = board.get("build.arduino.ldscript", "")
+
+if bootloader_opts:
+    if not bootloader_sel:
+        sys.stderr.write("Error. Board type requires board_bootloader to be specified\n")
+        env.Exit(1)
+
+    if bootloader_sel not in bootloader_opts and bootloader_sel != "none":
+        sys.stderr.write(
+            "Error. Invalid board_bootloader selection. Options are: %s or none\n" %
+            " ".join(k for k in bootloader_opts.keys()))
+        env.Exit(1)
+
+    if bootloader_sel == "adafruit":
+        # Create a modified bootloader hex file to set the first byte of the bootloader
+        # settings to 0x01 in order to disable CRC checking.
+        from intelhex import IntelHex
+        no_crc_bl = join(env.subst("$BUILD_DIR"),"adabl_crc_disabled.hex")
+        settings_addr = int(board.get("build.bootloaders.adafruit", "0x7F000"),16)
+        original_bl = IntelHex(
+            join(FRAMEWORK_DIR, "variants", board.get("build.variant", ""), "ada_bootloader.hex")
+        )
+        # Write 0x01 (little endian) to the first word in the settings address page
+        original_bl[settings_addr] = 0x01
+        original_bl[settings_addr + 1] = 0x00
+        original_bl[settings_addr + 2] = 0x00
+        original_bl[settings_addr + 3] = 0x00
+        original_bl.write_hex_file(no_crc_bl)
+        # Use the modified file as the hex file that will be uploaded.
+        env.Replace(BOOTLOADERHEX=no_crc_bl)
+        # Update the linker file for bootloader use and set a flag for the build.
+        env.Append(CPPDEFINES=["USE_ADA_BL"])
+        env.Replace(LDSCRIPT_PATH=ldscript[:-3] + "_adabl" + ldscript[-3:])
+        board.update("upload.maximum_size", board.get("upload.maximum_size") - 53248)
+        board.update("upload.maximum_ram_size", board.get("upload.maximum_ram_size") - 8)
+
+cpp_defines = env.Flatten(env.get("CPPDEFINES", []))
 
 #
 # Target: Build Core Library

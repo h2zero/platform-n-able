@@ -26,10 +26,11 @@
     "maximum_size": 262144,
     "protocol": "jlink",
     "protocols": [
-      "blackmagic",
       "jlink",
       "nrfjprog",
-      "stlink"
+      "stlink",
+      "cmsis-dap",
+      "blackmagic"
     ]
   },
   "url": "http://www.waveshare.com/wiki/BLE400",

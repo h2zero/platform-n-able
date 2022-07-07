@@ -44,11 +44,6 @@ def BeforeUpload(target, source, env):  # pylint: disable=W0613,W0621
     if bool(upload_options.get("wait_for_upload_port", False)):
         env.Replace(UPLOAD_PORT=env.WaitForNewSerialPort(before_ports))
 
-    # use only port name for BOSSA
-    if ("/" in env.subst("$UPLOAD_PORT") and
-            env.subst("$UPLOAD_PROTOCOL") == "sam-ba"):
-        env.Replace(UPLOAD_PORT=basename(env.subst("$UPLOAD_PORT")))
-
 
 def AfterUpload(target, source, env):  # pylint: disable=W0613,W0621
     before_ports = list_serial_ports()
@@ -116,6 +111,10 @@ env.Append(
 
 upload_protocol = env.subst("$UPLOAD_PROTOCOL")
 
+if upload_protocol not in board.get("upload.protocols"):
+    sys.stderr.write("%s is not a valid upload option for %s" % (upload_protocol, board.get("name", "")))
+    env.Exit(1)
+
 if upload_protocol == "nrfutil":
     env.Append(
         BUILDERS=dict(
@@ -150,8 +149,6 @@ elif "adafruit-nrfutil" == upload_protocol:
                     "genpkg",
                     "--dev-type",
                     "0x0052",
-                    "--sd-req",
-                    "none",
                     "--application",
                     "$SOURCES",
                     "$TARGET"
@@ -160,9 +157,6 @@ elif "adafruit-nrfutil" == upload_protocol:
             ),
         )
     )
-
-if not env.get("PIOFRAMEWORK"):
-    env.SConscript("frameworks/_bare.py")
 
 #
 # Target: Build executable and linkable firmware
@@ -223,7 +217,19 @@ if upload_protocol.startswith("blackmagic"):
             "-ex", "compare-sections",
             "-ex", "kill"
         ],
-        UPLOADCMD="$UPLOADER $UPLOADERFLAGS $BUILD_DIR/${PROGNAME}.elf"
+        ERASEFLAGS=[
+            "-nx",
+            "--batch",
+            "-ex", "target extended-remote %s$UPLOAD_PORT" % '\\\\.\\' if IS_WINDOWS else '',
+            "-ex", "monitor %s_scan" %
+            ("jtag" if upload_protocol == "blackmagic-jtag" else "swdp"),
+            "-ex", "attach 1",
+            "-ex", "monitor erase_mass",
+            "-ex", "kill"
+        ],
+        UPLOADCMD="$UPLOADER $UPLOADERFLAGS $BUILD_DIR/${PROGNAME}.elf",
+        ERASECMD="$UPLOADER $ERASEFLAGS"
+
     )
     upload_actions = [
         env.VerboseAction(env.AutodetectUploadPort, "Looking for BlackMagic port..."),
@@ -285,24 +291,7 @@ elif upload_protocol == "adafruit-nrfutil":
         env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")
     ]
 
-elif upload_protocol == "sam-ba":
-    env.Replace(
-        UPLOADER="bossac",
-        UPLOADERFLAGS=[
-            "--port", '"$UPLOAD_PORT"', "--write", "--erase", "-U", "--reset"
-        ],
-        UPLOADCMD="$UPLOADER $UPLOADERFLAGS $SOURCES"
-    )
-    if int(ARGUMENTS.get("PIOVERBOSE", 0)):
-        env.Prepend(UPLOADERFLAGS=["--info", "--debug"])
-
-    upload_actions = [
-        env.VerboseAction(BeforeUpload, "Looking for upload port..."),
-        env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")
-    ]
-
 elif upload_protocol.startswith("jlink"):
-
     def _jlink_cmd_script(env, source):
         build_dir = env.subst("$BUILD_DIR")
         if not isdir(build_dir):
@@ -352,10 +341,16 @@ elif upload_protocol in debug_tools:
                   platform.get_package_dir("tool-openocd") or "")
         for f in openocd_args
     ]
+    openocd_erase = openocd_args.copy()
+    openocd_erase.pop()
+    openocd_erase.extend(["init; halt; nrf5 mass_erase; reset; shutdown;"])
     env.Replace(
         UPLOADER="openocd",
         UPLOADERFLAGS=openocd_args,
-        UPLOADCMD="$UPLOADER $UPLOADERFLAGS")
+        UPLOADCMD="$UPLOADER $UPLOADERFLAGS",
+        ERASEFLAGS=openocd_erase,
+        ERASECMD="$UPLOADER $ERASEFLAGS"
+    )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 
 # custom upload tool
@@ -366,6 +361,27 @@ else:
     sys.stderr.write("Warning! Unknown upload protocol %s\n" % upload_protocol)
 
 env.AddPlatformTarget("upload", target_firm, upload_actions, "Upload")
+
+#
+# Target: Flash bootloader
+#
+
+if "BOOTLOADERHEX" in env:
+    if "bootloader" in COMMAND_LINE_TARGETS and upload_protocol.startswith("blackmagic"):
+        env.Replace(
+            UPLOADCMD="$UPLOADER $UPLOADERFLAGS %s" % env.get("BOOTLOADERHEX", "")
+        )
+
+    env.AddPlatformTarget(
+        "bootloader",
+        env.get("BOOTLOADERHEX", ""),
+        upload_actions,
+        "Burn Bootloader",
+    )
+
+if "bootloader" in COMMAND_LINE_TARGETS and not env.GetProjectOption("board_bootloader", ""):
+    sys.stderr.write("Error. board_bootloader not specified in environment.\n")
+    env.Exit(1)
 
 #
 # Target: Erase Flash

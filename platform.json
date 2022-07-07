@@ -39,10 +39,6 @@
       "optional": true,
       "version": "~1.503.0"
     },
-    "tool-bossac-nordicnrf52": {
-      "optional": true,
-      "version": "~1.10866.0"
-    },
     "tool-nrfjprog": {
       "type": "uploader",
       "optional": true,

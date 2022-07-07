@@ -41,9 +41,6 @@ class NablePlatform(PlatformBase):
             if upload_protocol == "adafruit-nrfutil":
                 self.packages["tool-adafruit-nrfutil"]["optional"] = False
 
-            if upload_protocol == "sam-ba":
-                self.packages["tool-bossac-nordicnrf52"]["optional"] = False
-
         # configure J-LINK tool
         jlink_conds = [
             "jlink" in variables.get(option, "")

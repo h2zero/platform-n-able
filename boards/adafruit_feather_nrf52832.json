@@ -5,10 +5,10 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_BT5032A_TB",
+      "extra_flags": "-DARDUINO_NRF52832_FEATHER",
       "f_cpu": "64000000L",
       "mcu": "nrf52832_xxaa",
-      "variant": "BT5032A_TB"
+      "variant": "feather_nrf52832"
     },
     "bootloaders": {
       "adafruit": "0x7F000"
@@ -23,12 +23,12 @@
     "frameworks": [
       "arduino"
     ],
-    "name": "E104-BT5032A-TB",
+    "name": "Adafruit Bluefruit nRF52832 Feather",
     "upload": {
       "maximum_ram_size": 65536,
       "maximum_size": 524288,
       "speed": 115200,
-      "protocol": "jlink",
+      "protocol": "adafruit-nrfutil",
       "protocols": [
         "jlink",
         "nrfjprog",
@@ -38,6 +38,6 @@
         "blackmagic"
       ]
     },
-    "url": "https://www.ebyte.com/en/product-view-news.html?id=956",
-    "vendor": "Ebyte"
+    "url": "https://www.adafruit.com/product/3406",
+    "vendor": "Adafruit"
   }

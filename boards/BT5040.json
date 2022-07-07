@@ -5,7 +5,7 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_BT5040",
+      "extra_flags": "-DARDUINO_BT5040 -DUSE_NORDIC_BL",
       "f_cpu": "64000000L",
       "mcu": "nrf52840_xxaa",
       "variant": "nRF52840_Dongle",
@@ -33,7 +33,7 @@
     ],
     "name": "E104-BT5040",
     "upload": {
-      "maximum_ram_size": 262144,
+      "maximum_ram_size": 262136,
       "maximum_size": 913408,
       "speed": 115200,
       "protocol": "nrfutil",

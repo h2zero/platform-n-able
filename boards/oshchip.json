@@ -26,9 +26,11 @@
     "maximum_size": 262144,
     "protocol": "jlink",
     "protocols": [
-      "blackmagic",
       "jlink",
-      "stlink"
+      "nrfjprog",
+      "stlink",
+      "cmsis-dap",
+      "blackmagic"
     ]
   },
   "url": "http://oshchip.org/",
