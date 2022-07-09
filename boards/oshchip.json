@@ -5,7 +5,7 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DARDUINO_OSHCHIP -DDEVICE_RAM_SIZE=32",
+    "extra_flags": "-DARDUINO_OSHCHIP -DDEVICE_RAM_SIZE=32 -DUSE_LFRC",
     "f_cpu": "16000000L",
     "mcu": "nrf51822",
     "variant": "OSHChip"

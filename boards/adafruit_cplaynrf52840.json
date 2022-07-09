@@ -5,7 +5,7 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_NRF52840_CIRCUITPLAY",
+      "extra_flags": "-DARDUINO_NRF52840_CIRCUITPLAY -DUSE_LFRC",
       "f_cpu": "64000000L",
       "hwids": [
         [

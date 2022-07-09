@@ -5,7 +5,7 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_BBC_MICROBIT_V2",
+      "extra_flags": "-DARDUINO_BBC_MICROBIT_V2 -DUSE_LFSYNT",
       "f_cpu": "64000000L",
       "mcu": "nrf52833_xxaa",
       "variant": "BBCmicrobitV2"

@@ -5,7 +5,7 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_RB_BLE_NANO_2",
+      "extra_flags": "-DARDUINO_RB_BLE_NANO_2 -DUSE_LFXO",
       "f_cpu": "64000000L",
       "mcu": "nrf52832_xxaa",
       "variant": "RedBear_BLENano2"

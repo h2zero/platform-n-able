@@ -180,7 +180,12 @@ if bootloader_opts:
     if bootloader_sel == "adafruit":
         # Create a modified bootloader hex file to set the first byte of the bootloader
         # settings to 0x01 in order to disable CRC checking.
-        from intelhex import IntelHex
+        try:
+            from intelhex import IntelHex
+        except ImportError:
+            env.Execute('$PYTHONEXE -m pip install -U --force-reinstall intelhex')
+            from intelhex import IntelHex
+
         no_crc_bl = join(env.subst("$BUILD_DIR"),"adabl_crc_disabled.hex")
         settings_addr = int(board.get("build.bootloaders.adafruit", "0x7F000"),16)
         original_bl = IntelHex(
@@ -201,6 +206,11 @@ if bootloader_opts:
         board.update("upload.maximum_ram_size", board.get("upload.maximum_ram_size") - 8)
 
 cpp_defines = env.Flatten(env.get("CPPDEFINES", []))
+
+# Select RC oscillator as the low frequency source by default
+clock_options = ("USE_LFXO", "USE_LFRC", "USE_LFSYNT")
+if not any(d in clock_options for d in cpp_defines):
+    env.Append(CPPDEFINES=["USE_LFRC"])
 
 #
 # Target: Build Core Library

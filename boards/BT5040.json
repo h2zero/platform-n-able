@@ -5,7 +5,7 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_BT5040 -DUSE_NORDIC_BL",
+      "extra_flags": "-DARDUINO_BT5040 -DUSE_NORDIC_BL -DUSE_LFXO",
       "f_cpu": "64000000L",
       "mcu": "nrf52840_xxaa",
       "variant": "nRF52840_Dongle",

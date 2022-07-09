@@ -251,7 +251,7 @@ elif upload_protocol == "nrfutil":
     try:
         import nordicsemi
     except ImportError:
-        env.Execute('$PYTHONEXE -m pip install nrfutil==6.1.4')
+        env.Execute('$PYTHONEXE -m pip install -U --force-reinstall nrfutil==6.1.4')
 
     env.Replace(
         UPLOADER="nrfutil",

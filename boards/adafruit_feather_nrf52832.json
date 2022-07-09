@@ -5,7 +5,7 @@
       },
       "core": "nRF5",
       "cpu": "cortex-m4",
-      "extra_flags": "-DARDUINO_NRF52832_FEATHER",
+      "extra_flags": "-DARDUINO_NRF52832_FEATHER -DUSE_LFXO",
       "f_cpu": "64000000L",
       "mcu": "nrf52832_xxaa",
       "variant": "feather_nrf52832"

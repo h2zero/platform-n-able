@@ -5,7 +5,7 @@
     },
     "core": "nRF5",
     "cpu": "cortex-m0",
-    "extra_flags": "-DARDUINO_WAVESHARE_BLE400 -DDEVICE_RAM_SIZE=16",
+    "extra_flags": "-DARDUINO_WAVESHARE_BLE400 -DDEVICE_RAM_SIZE=16 -DUSE_LFXO",
     "f_cpu": "16000000L",
     "mcu": "nrf51822",
     "variant": "Waveshare_BLE400"
