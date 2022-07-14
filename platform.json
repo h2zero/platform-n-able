@@ -9,7 +9,9 @@
     "ARM",
     "Cortex-M",
     "NimBLE",
-    "nRF5"
+    "Nordic Semiconductor",
+    "nRF51",
+    "nRF52"
   ],
   "engines": {
     "platformio": "^6"

@@ -23,7 +23,7 @@
   "name": "BluzDK",
   "upload": {
     "maximum_ram_size": 32768,
-    "maximum_size": 262144,
+    "maximum_size": 258048,
     "protocol": "jlink",
     "protocols": [
       "blackmagic",

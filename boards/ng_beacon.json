@@ -23,7 +23,7 @@
   "name": "ng-beacon",
   "upload": {
     "maximum_ram_size": 16384,
-    "maximum_size": 262144,
+    "maximum_size": 258048,
     "protocol": "jlink",
     "protocols": [
       "jlink",

@@ -30,7 +30,7 @@
     "name": "Nordic nRF52-DK",
     "upload": {
       "maximum_ram_size": 65536,
-      "maximum_size": 524288,
+      "maximum_size": 507904,
       "protocol": "jlink",
       "protocols": [
         "jlink",

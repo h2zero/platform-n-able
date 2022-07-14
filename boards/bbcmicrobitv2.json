@@ -30,7 +30,7 @@
     "name": "BBC micro:bit V2",
     "upload": {
       "maximum_ram_size": 131072,
-      "maximum_size": 524288,
+      "maximum_size": 507904,
       "protocol": "cmsis-dap",
       "protocols": [
         "jlink",

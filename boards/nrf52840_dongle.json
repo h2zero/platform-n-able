@@ -34,7 +34,7 @@
     "name": "nRF52840 Dongle (PCA10059)",
     "upload": {
       "maximum_ram_size": 262136,
-      "maximum_size": 913408,
+      "maximum_size": 897024,
       "speed": 115200,
       "protocol": "nrfutil",
       "protocols": [

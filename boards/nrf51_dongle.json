@@ -30,7 +30,7 @@
   "name": "Nordic nRF51 Dongle (PCA10031)",
   "upload": {
     "maximum_ram_size": 32768,
-    "maximum_size": 262144,
+    "maximum_size": 258048,
     "protocol": "jlink",
     "protocols": [
       "cmsis-dap",

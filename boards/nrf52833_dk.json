@@ -30,7 +30,7 @@
     "name": "nRF52833 DK (PCA10100)",
     "upload": {
       "maximum_ram_size": 131072,
-      "maximum_size": 524288,
+      "maximum_size": 507904,
       "protocol": "jlink",
       "protocols": [
         "jlink",
