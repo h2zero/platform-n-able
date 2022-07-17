@@ -308,8 +308,22 @@ elif upload_protocol.startswith("jlink"):
             fp.write("\n".join(commands))
         return script_path
 
+    def _jlink_erase_cmd_script(env):
+        build_dir = env.subst("$BUILD_DIR")
+        if not isdir(build_dir):
+            makedirs(build_dir)
+        script_path = join(build_dir, "erase.jlink")
+        commands = [
+            "erase",
+            "q"
+        ]
+        with open(script_path, "w") as fp:
+            fp.write("\n".join(commands))
+        return script_path
+
     env.Replace(
         __jlink_cmd_script=_jlink_cmd_script,
+        __jlink_erase_cmd_script=_jlink_erase_cmd_script,
         UPLOADER="JLink.exe" if system() == "Windows" else "JLinkExe",
         UPLOADERFLAGS=[
             "-device", board.get("debug", {}).get("jlink_device"),
@@ -318,7 +332,8 @@ elif upload_protocol.startswith("jlink"):
             "-autoconnect", "1",
             "-NoGui", "1"
         ],
-        UPLOADCMD='$UPLOADER $UPLOADERFLAGS -CommanderScript "${__jlink_cmd_script(__env__, SOURCE)}"'
+        UPLOADCMD='$UPLOADER $UPLOADERFLAGS -CommanderScript "${__jlink_cmd_script(__env__, SOURCE)}"',
+        ERASECMD='$UPLOADER $UPLOADERFLAGS -CommanderScript "${__jlink_erase_cmd_script(__env__)}"'
     )
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 
