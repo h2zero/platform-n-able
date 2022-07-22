@@ -178,27 +178,7 @@ if bootloader_opts:
         env.Exit(1)
 
     if bootloader_sel == "adafruit":
-        # Create a modified bootloader hex file to set the first byte of the bootloader
-        # settings to 0x01 in order to disable CRC checking.
-        try:
-            from intelhex import IntelHex
-        except ImportError:
-            env.Execute('$PYTHONEXE -m pip install -U --force-reinstall intelhex')
-            from intelhex import IntelHex
-
-        no_crc_bl = join(env.subst("$BUILD_DIR"),"adabl_crc_disabled.hex")
-        settings_addr = int(board.get("bootloaders.adafruit", "0x7F000"),16)
-        original_bl = IntelHex(
-            join(FRAMEWORK_DIR, "variants", board.get("build.variant", ""), "ada_bootloader.hex")
-        )
-        # Write 0x01 (little endian) to the first word in the settings address page
-        original_bl[settings_addr] = 0x01
-        original_bl[settings_addr + 1] = 0x00
-        original_bl[settings_addr + 2] = 0x00
-        original_bl[settings_addr + 3] = 0x00
-        original_bl.write_hex_file(no_crc_bl)
-        # Use the modified file as the hex file that will be uploaded.
-        env.Replace(BOOTLOADERHEX=no_crc_bl)
+        env.Replace(BOOTLOADERHEX=join(FRAMEWORK_DIR, "variants", board.get("build.variant", ""), "ada_bootloader.hex"))
         # Update the linker file for bootloader use and set a flag for the build.
         env.Append(CPPDEFINES=["USE_ADA_BL"])
         env.Replace(LDSCRIPT_PATH=ldscript[:-3] + "_adabl" + ldscript[-3:])
