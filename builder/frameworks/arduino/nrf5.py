@@ -187,7 +187,7 @@ if bootloader_opts:
             from intelhex import IntelHex
 
         no_crc_bl = join(env.subst("$BUILD_DIR"),"adabl_crc_disabled.hex")
-        settings_addr = int(board.get("build.bootloaders.adafruit", "0x7F000"),16)
+        settings_addr = int(board.get("bootloaders.adafruit", "0x7F000"),16)
         original_bl = IntelHex(
             join(FRAMEWORK_DIR, "variants", board.get("build.variant", ""), "ada_bootloader.hex")
         )
