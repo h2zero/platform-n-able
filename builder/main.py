@@ -15,7 +15,7 @@
 import sys
 from platform import system
 from os import makedirs
-from os.path import isdir, join, basename
+from os.path import isdir, join
 
 IS_WINDOWS = sys.platform.startswith("win")
 IS_MACOS = sys.platform.startswith("darwin")

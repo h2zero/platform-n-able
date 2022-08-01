@@ -20,7 +20,6 @@ kinds of creative coding, interactive objects, spaces or physical experiences.
 """
 
 import sys
-from os import listdir
 from os.path import isdir, join
 
 from SCons.Script import DefaultEnvironment
