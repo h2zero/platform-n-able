@@ -20,15 +20,15 @@
     "type": "git",
     "url": "https://github.com/h2zero/platform-n-able.git"
   },
-  "version": "0.1.0",
+  "version": "1.0.0",
   "frameworks": {
     "arduino": {
-      "package": "framework-n-able",
+      "package": "framework-n-able-arduino",
       "script": "builder/frameworks/arduino/nrf5.py"
     }
   },
   "packages": {
-    "framework-n-able": {
+    "framework-n-able-arduino": {
       "type": "framework",
       "optional": false,
       "version": "https://github.com/h2zero/n-able-Arduino.git"
