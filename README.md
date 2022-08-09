@@ -12,7 +12,7 @@ Apache NimBLE is an open-source Bluetooth 5.1 stack (both Host & Controller) tha
 
 ```ini
 [env]
-platform = platform = https://github.com/h2zero/platform-n-able.git#1.0.0
+platform = https://github.com/h2zero/platform-n-able.git#1.0.0
 framework = arduino
 lib_deps = h2zero/NimBLE-Arduino@^1.4.0
 board = ...
