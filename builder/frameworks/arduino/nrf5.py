@@ -126,7 +126,8 @@ if "BOARD" in env:
         ]
     )
 
-if board.get("build.cpu") == "cortex-m4":
+# only nRF5283x and nRF52840 have FPUs
+if any(mcu in board.get("build.mcu") for mcu in {'5283', '52840'}):
     env.Append(
         ASFLAGS=[
             "-mfloat-abi=hard",
