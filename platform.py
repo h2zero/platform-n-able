@@ -12,8 +12,9 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-#import copy
+import os
 import sys
+import subprocess
 
 from platformio.public import PlatformBase
 
@@ -40,6 +41,17 @@ class NablePlatform(PlatformBase):
 
             if upload_protocol == "adafruit-nrfutil":
                 self.packages["tool-adafruit-nrfutil"]["optional"] = False
+
+            if upload_protocol == "nrfutil":
+                try:
+                    import nordicsemi
+                except ImportError:
+                    nrfutil_whl = os.path.join(self.get_dir(), "tools",
+                                               "n_able_nrfutil-1.0.0-py3-none-any.whl")
+                    try:
+                        subprocess.check_call([sys.executable, "-m", "pip", "install", "-U", nrfutil_whl])
+                    except subprocess.CalledProcessError as e:
+                        sys.stderr.write("Error: Could not install nrfutil : %s" %  e)
 
         # configure J-LINK tool
         jlink_conds = [

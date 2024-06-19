@@ -248,11 +248,6 @@ elif upload_protocol == "nrfjprog":
     upload_actions = [env.VerboseAction("$UPLOADCMD", "Uploading $SOURCE")]
 
 elif upload_protocol == "nrfutil":
-    try:
-        import nordicsemi
-    except ImportError:
-        env.Execute('$PYTHONEXE -m pip install -U --force-reinstall nrfutil==6.1.4')
-
     env.Replace(
         UPLOADER="nrfutil",
         UPLOADERFLAGS=[
