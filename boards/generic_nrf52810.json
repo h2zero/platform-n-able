@@ -23,7 +23,7 @@
     "name": "Generic nRF52810",
     "upload": {
       "maximum_ram_size": 24576,
-      "maximum_size": 155648,
+      "maximum_size": 180224,
       "protocol": "jlink",
       "protocols": [
         "jlink",
