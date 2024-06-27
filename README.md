@@ -12,7 +12,7 @@ Apache NimBLE is an open-source Bluetooth 5.1 stack (both Host & Controller) tha
 
 ```ini
 [env]
-platform = https://github.com/h2zero/platform-n-able.git#1.0.0
+platform = https://github.com/h2zero/platform-n-able.git#1.1.0
 framework = arduino
 lib_deps = h2zero/NimBLE-Arduino@^1.4.0
 board = ...
@@ -47,6 +47,9 @@ board = ...
  * [hackaBLE_v2](https://github.com/electronut/ElectronutLabs-hackaBLE)
  * [Adafruit Feather nRF52832](https://www.adafruit.com/product/3406)
  * [Ebyte E104-BT5032A-TB](https://www.ebyte.com/en/product-view-news.html?id=956)
+
+### nRF52810
+ * [Generic nRF52810 MCU](https://www.nordicsemi.com/Products/nRF52810)
 
 ### nRF51
  * [Generic nRF51 MCU](https://www.nordicsemi.com/eng/Products/Bluetooth-low-energy/nRF51822)
