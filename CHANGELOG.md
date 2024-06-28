@@ -3,7 +3,10 @@
 All notable changes to this project will be documented in this file.
 ## [Unreleased]
 
-## [1.1.0] - 2024-06-27
+## [1.1.0] - 2024-06-28
+### Changed
+ - Updated n-able-Arduino to version 0.2.0
+
 ### Fixed
  - Broken nrfutil tool replaced with provided wheel using n-able-nrfutil.
  - FPU is no longer enabled for devices that do not have one.
