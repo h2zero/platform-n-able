@@ -209,7 +209,7 @@ if upload_protocol.startswith("blackmagic"):
         UPLOADERFLAGS=[
             "-nx",
             "--batch",
-            "-ex", "target extended-remote %s$UPLOAD_PORT" % '\\\\.\\' if IS_WINDOWS else '',
+            "-ex", "target extended-remote %s$UPLOAD_PORT" % ('\\\\.\\' if IS_WINDOWS else ''),
             "-ex", "monitor %s_scan" %
             ("jtag" if upload_protocol == "blackmagic-jtag" else "swdp"),
             "-ex", "attach 1",
@@ -220,7 +220,7 @@ if upload_protocol.startswith("blackmagic"):
         ERASEFLAGS=[
             "-nx",
             "--batch",
-            "-ex", "target extended-remote %s$UPLOAD_PORT" % '\\\\.\\' if IS_WINDOWS else '',
+            "-ex", "target extended-remote %s$UPLOAD_PORT" % ('\\\\.\\' if IS_WINDOWS else ''),
             "-ex", "monitor %s_scan" %
             ("jtag" if upload_protocol == "blackmagic-jtag" else "swdp"),
             "-ex", "attach 1",
