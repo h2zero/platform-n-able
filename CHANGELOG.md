@@ -1,7 +1,9 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-## [Unreleased]
+## [1.1.1] - 2025-01-10
+### Fixed
+- Upload/erase with Blackmagic Probe
 
 ## [1.1.0] - 2024-06-28
 ### Changed
