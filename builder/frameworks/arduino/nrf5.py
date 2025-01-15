@@ -72,6 +72,8 @@ env.Append(
     CPPPATH=[
         join(FRAMEWORK_DIR, "cores", board.get("build.core")),
         join(FRAMEWORK_DIR, "cores", board.get("build.core"),
+            "libc", "printf"),
+        join(FRAMEWORK_DIR, "cores", board.get("build.core"),
              "nordic", "nrfx"),
         join(FRAMEWORK_DIR, "cores", board.get("build.core"),
              "nordic", "nrfx", "drivers", "include"),
