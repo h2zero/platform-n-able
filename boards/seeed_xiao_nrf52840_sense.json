@@ -27,6 +27,9 @@
     },
     "usb_product": "XIAO nRF52840 Sense"
   },
+  "bootloaders": {
+    "adafruit": "0xFF000"
+  },
   "connectivity": [
     "bluetooth"
   ],
@@ -42,12 +45,12 @@
   "upload": {
     "maximum_ram_size": 237568,
     "maximum_size": 823296,
-    "protocol": "nrfutil",
+    "protocol": "adafruit-nrfutil",
     "speed": 115200,
     "protocols": [
       "jlink",
       "nrfjprog",
-      "nrfutil",
+      "adafruit-nrfutil",
       "cmsis-dap",
       "sam-ba",
       "blackmagic"
