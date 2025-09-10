@@ -31,7 +31,7 @@
     "framework-n-able-arduino": {
       "type": "framework",
       "optional": false,
-      "version": "https://github.com/h2zero/n-able-Arduino.git@0.3.0"
+      "version": "https://github.com/h2zero/n-able-Arduino.git#update-linker/bootloaders"
     },
     "toolchain-gccarmnoneeabi": {
       "type": "toolchain",
