@@ -10,9 +10,27 @@
       "mcu": "nrf52832_xxaa",
       "variant": "feather_nrf52832"
     },
-    "bootloaders": {
-      "adafruit": "0x7F000"
-    },
+    "bootloaders": [
+      {
+        "name": "adafruit_s132_v6",
+        "bootloader_file": "nrf52832_s132_v6_adabl.hex",
+        "linker_script": "nrf52832_s132_v6_adabl.ld",
+        "flags": ["USE_ADA_BL", "ADA_SD_BL"],
+        "max_size": 303104,
+        "max_ram_size": 51712
+      },
+      {
+        "name": "adafruit_serial",
+        "bootloader_file": "nrf52832_serial_adabl.hex",
+        "linker_script": "nrf52832_serial_adabl.ld",
+        "flags": ["USE_ADA_BL"],
+        "max_size": 454656,
+        "max_ram_size": 65528
+      }
+    ],
+
+    "default_bootloader": "adafruit_s132_v6",
+
     "connectivity": [
       "bluetooth"
     ],
@@ -36,7 +54,10 @@
         "stlink",
         "cmsis-dap",
         "blackmagic"
-      ]
+      ],
+      "use_1200bps_touch": true,
+      "require_upload_port": true,
+      "wait_for_upload_port": true
     },
     "url": "https://www.adafruit.com/product/3406",
     "vendor": "Adafruit"

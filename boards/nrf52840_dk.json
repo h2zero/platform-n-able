@@ -10,6 +10,35 @@
       "mcu": "nrf52840_xxaa",
       "variant": "nRF52840_DK"
     },
+    "bootloaders": [
+      {
+        "name": "adafruit_s140_v6",
+        "bootloader_file": "nrf52840_s140_v6_adabl.hex",
+        "linker_script": "nrf52840_s140_v6_adabl.ld",
+        "flags": ["USE_ADA_BL", "ADA_SD_BL"],
+        "max_size": 827392,
+        "max_ram_size": 237568
+      },
+      {
+        "name": "adafruit_s140_v7",
+        "bootloader_file": "nrf52840_s140_v7_adabl.hex",
+        "linker_script": "nrf52840_s140_v7_adabl.ld",
+        "flags": ["USE_ADA_BL", "ADA_SD_BL"],
+        "max_size": 823296,
+        "max_ram_size": 237568
+      },
+      {
+        "name": "adafruit_serial",
+        "bootloader_file": "nrf52840_serial_adabl.hex",
+        "linker_script": "nrf52840_serial_adabl.ld",
+        "flags": ["USE_ADA_BL"],
+        "max_size": 978944,
+        "max_ram_size": 262136
+      }
+    ],
+
+    "default_bootloader": "none",
+
     "connectivity": [
       "bluetooth"
     ],
@@ -35,10 +64,14 @@
       "protocols": [
         "jlink",
         "nrfjprog",
+        "adafruit-nrfutil",
         "stlink",
         "blackmagic",
         "cmsis-dap"
-      ]
+      ],
+      "use_1200bps_touch": true,
+      "require_upload_port": true,
+      "wait_for_upload_port": true
     },
     "url": "https://www.nordicsemi.com/Products/Development-hardware/nRF52840-DK",
     "vendor": "Nordic"
