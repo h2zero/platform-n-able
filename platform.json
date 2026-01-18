@@ -31,15 +31,12 @@
     "framework-n-able-arduino": {
       "type": "framework",
       "optional": false,
-      "version": "https://github.com/h2zero/n-able-Arduino.git@0.3.0"
+      "version": "https://github.com/h2zero/n-able-Arduino.git"
     },
     "toolchain-gccarmnoneeabi": {
       "type": "toolchain",
       "owner": "platformio",
-      "version": ">=1.80301.0,<1.100301.0",
-      "optionalVersions": [
-        "~1.90301.0"
-      ]
+      "version": "~1.100301.0"
     },
     "tool-adafruit-nrfutil": {
       "owner": "platformio",

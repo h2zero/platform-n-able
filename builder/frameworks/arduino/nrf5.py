@@ -34,7 +34,7 @@ assert isdir(FRAMEWORK_DIR)
 env.Append(
     ASFLAGS=["-x", "assembler-with-cpp"],
 
-    CFLAGS=["-std=gnu11"],
+    CFLAGS=["-std=gnu17"],
 
     CCFLAGS=[
         "-Os",  # optimize for size
@@ -50,7 +50,7 @@ env.Append(
     CXXFLAGS=[
         "-fno-rtti",
         "-fno-exceptions",
-        "-std=gnu++11",
+        "-std=gnu++20",
         "-fno-threadsafe-statics"
     ],
 
