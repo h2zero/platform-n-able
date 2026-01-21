@@ -185,13 +185,12 @@ if bootloader_opts:
         # Validate required bootloader fields
         required_fields = ["bootloader_file", "linker_script", "max_size", "max_ram_size"]
         missing_fields = [field for field in required_fields if field not in selected_bl]
-        
         if missing_fields:
             sys.stderr.write(
                 "Error. Bootloader '%s' is missing required fields: %s\n" %
                 (selected_bl.get("name", "unknown"), ", ".join(missing_fields)))
             env.Exit(1)
-        
+
         # Use bootloader_file, linker_script, max_size, max_ram_size from selected_bl
         env.Replace(BOOTLOADERHEX=join(FRAMEWORK_DIR, "variants", board.get("build.variant", ""), selected_bl["bootloader_file"]))
         if "flags" in selected_bl:
