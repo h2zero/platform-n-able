@@ -162,28 +162,42 @@ env.Append(
 if not board.get("build.ldscript", ""):
     env.Replace(LDSCRIPT_PATH=board.get("build.arduino.ldscript", ""))
 
-bootloader_opts = board.get("bootloaders", "")
+bootloader_opts = board.get("bootloaders", [])
 bootloader_sel = env.GetProjectOption("board_bootloader", "")
-ldscript = board.get("build.arduino.ldscript", "")
 
 if bootloader_opts:
     if not bootloader_sel:
-        sys.stderr.write("Error. Board type requires board_bootloader to be specified\n")
-        env.Exit(1)
+        bootloader_sel = board.get("default_bootloader", "none")
 
-    if bootloader_sel not in bootloader_opts and bootloader_sel != "none":
+    selected_bl = None
+    for bl in bootloader_opts:
+        if bl.get("name") == bootloader_sel:
+            selected_bl = bl
+            break
+
+    if not selected_bl and bootloader_sel != "none":
         sys.stderr.write(
             "Error. Invalid board_bootloader selection. Options are: %s or none\n" %
-            " ".join(k for k in bootloader_opts.keys()))
+            " ".join(bl.get("name", "") for bl in bootloader_opts))
         env.Exit(1)
 
-    if bootloader_sel == "adafruit":
-        env.Replace(BOOTLOADERHEX=join(FRAMEWORK_DIR, "variants", board.get("build.variant", ""), "ada_bootloader.hex"))
-        # Update the linker file for bootloader use and set a flag for the build.
-        env.Append(CPPDEFINES=["USE_ADA_BL"])
-        env.Replace(LDSCRIPT_PATH=ldscript[:-3] + "_adabl" + ldscript[-3:])
-        board.update("upload.maximum_size", board.get("upload.maximum_size") - 53248)
-        board.update("upload.maximum_ram_size", board.get("upload.maximum_ram_size") - 8)
+    if selected_bl:
+        # Validate required bootloader fields
+        required_fields = ["bootloader_file", "linker_script", "max_size", "max_ram_size"]
+        missing_fields = [field for field in required_fields if field not in selected_bl]
+        if missing_fields:
+            sys.stderr.write(
+                "Error. Bootloader '%s' is missing required fields: %s\n" %
+                (selected_bl.get("name", "unknown"), ", ".join(missing_fields)))
+            env.Exit(1)
+
+        # Use bootloader_file, linker_script, max_size, max_ram_size from selected_bl
+        env.Replace(BOOTLOADERHEX=join(FRAMEWORK_DIR, "variants", board.get("build.variant", ""), selected_bl["bootloader_file"]))
+        if "flags" in selected_bl:
+            env.Append(CPPDEFINES=selected_bl["flags"])
+        env.Replace(LDSCRIPT_PATH=selected_bl["linker_script"])
+        board.update("upload.maximum_size", selected_bl["max_size"])
+        board.update("upload.maximum_ram_size", selected_bl["max_ram_size"])
 
 cpp_defines = env.Flatten(env.get("CPPDEFINES", []))
 

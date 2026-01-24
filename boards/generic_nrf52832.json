@@ -10,6 +10,27 @@
       "mcu": "nrf52832_xxaa",
       "variant": "Generic"
     },
+    "bootloaders": [
+      {
+        "name": "adafruit_s132_v6",
+        "bootloader_file": "nrf52832_s132_v6_adabl.hex",
+        "linker_script": "nrf52832_s132_v6_adabl.ld",
+        "flags": ["USE_ADA_BL", "ADA_SD_BL"],
+        "max_size": 303104,
+        "max_ram_size": 51712
+      },
+      {
+        "name": "adafruit_serial",
+        "bootloader_file": "nrf52832_serial_adabl.hex",
+        "linker_script": "nrf52832_serial_adabl.ld",
+        "flags": ["USE_ADA_BL"],
+        "max_size": 454656,
+        "max_ram_size": 65528
+      }
+    ],
+
+    "default_bootloader": "none",
+
     "connectivity": [
       "bluetooth"
     ],
@@ -28,10 +49,14 @@
       "protocols": [
         "jlink",
         "nrfjprog",
+        "adafruit-nrfutil",
         "stlink",
         "cmsis-dap",
         "blackmagic"
-      ]
+      ],
+      "use_1200bps_touch": false,
+      "require_upload_port": false,
+      "wait_for_upload_port": false
     },
     "url": "https://www.nordicsemi.com/Products/Bluetooth-Low-Energy",
     "vendor": "Generic"

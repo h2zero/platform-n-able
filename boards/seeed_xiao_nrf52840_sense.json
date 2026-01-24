@@ -1,7 +1,7 @@
 {
   "build": {
     "arduino": {
-      "ldscript": "nrf52840_s140_v7_seeed.ld"
+      "ldscript": "nrf52840_xxaa.ld"
     },
     "core": "nRF5",
     "cpu": "cortex-m4",
@@ -19,23 +19,34 @@
     ],
     "mcu": "nrf52840",
     "variant": "Seeed_XIAO_nRF52840_Sense",
-    "softdevice": {
-      "sd_flags": "-DS140",
-      "sd_name": "s140",
-      "sd_version": "7.3.0",
-      "sd_fwid": "0x0123"
-    },
     "usb_product": "XIAO nRF52840 Sense"
   },
-  "bootloaders": {
-    "adafruit": "0xFF000"
-  },
+  "bootloaders": [
+    {
+      "name": "adafruit_s140_v7",
+      "bootloader_file": "nrf52840_s140_v7_adabl.hex",
+      "linker_script": "nrf52840_s140_v7_adabl.ld",
+      "flags": ["USE_ADA_BL", "ADA_SD_BL"],
+      "max_size": 823296,
+      "max_ram_size": 237568
+    },
+    {
+      "name": "adafruit_serial",
+      "bootloader_file": "nrf52840_serial_adabl.hex",
+      "linker_script": "nrf52840_serial_adabl.ld",
+      "flags": ["USE_ADA_BL"],
+      "max_size": 978944,
+      "max_ram_size": 262136
+    }
+  ],
+
+  "default_bootloader": "adafruit_s140_v7",
+
   "connectivity": [
     "bluetooth"
   ],
   "debug": {
     "jlink_device": "nRF52840_xxAA",
-    "openocd_target": "nrf52.cfg",
     "svd_path": "nrf52840.svd"
   },
   "frameworks": [
@@ -43,8 +54,8 @@
   ],
   "name": "Seeed XIAO BLE Sense",
   "upload": {
-    "maximum_ram_size": 237568,
-    "maximum_size": 823296,
+    "maximum_ram_size": 262144,
+    "maximum_size": 1032192,
     "protocol": "adafruit-nrfutil",
     "speed": 115200,
     "protocols": [
