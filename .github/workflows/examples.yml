@@ -1,6 +1,12 @@
 name: Examples
 
-on: [push, pull_request]
+on:
+  push:
+    branches:
+      - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   build:
@@ -14,7 +20,7 @@ jobs:
           - "examples/BLE-server-test"
     runs-on: ${{ matrix.os }}
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@v6
         with:
           submodules: "recursive"
       - name: Set up Python ${{ matrix.python-version }}
